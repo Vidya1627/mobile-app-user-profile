@@ -1,5 +1,7 @@
+const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const otpService = require('../services/otpService');
+const secretKey = require('../../config/generateSecretKey');
 
 exports.login = async (req, res) => {
   try {
@@ -10,18 +12,18 @@ exports.login = async (req, res) => {
 
     // If the user doesn't exist, show the msg to sign up
     if (!user) {
-        return res.status(401).json({ message: 'User not registered. Please sign up' });
+      return res.status(401).json({ message: 'User not registered. Please sign up' });
     }
 
-    //    // Verify the entered OTP
-    //   if (user.otp !== otp) {
-    //     return res.status(401).json({ message: 'Invalid OTP' });
-    //   }
+    // Generate and return JWT upon successful login
+    const token = jwt.sign({ email: user.email, userId: user._id }, secretKey, { expiresIn: '1h' });
+    
 
     const generatedOTP = otpService.generateOTP();
     console.log(`OTP for email ${email}: ${generatedOTP}`);
     // Successful login
-    return res.status(200).json({ message: 'Login successful', user });
+    return res.status(200).json({ message: 'Login successful', token });
+    // return res.status(200).json({ message: 'Login successful', user });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal server error' });
