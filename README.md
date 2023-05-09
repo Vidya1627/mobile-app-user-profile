@@ -1,7 +1,7 @@
 # mobile-app-user-profile
 
 ```
-###features:
+### features:
 
 - OTP-based login/signup
 - profile view and update 
@@ -10,7 +10,7 @@
 ```
 
 ```
-###following API endpoints are available:
+### following API endpoints are available:
 
 - POST /users/signup - used for OTP-based signup. the request body should contain email, first name and last name fields.
 - POST /users/login - used for OTP-based login. the request body should contain email field.
@@ -20,5 +20,5 @@
 ```
 
 ```
-###tech-stack:
+### tech-stack:
 - Node.js, Express, and MongoDB, following the MVC pattern.
